@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-class InMemoryPersonsService {
+module.exports = class InMemoryPersonsService {
    persons= [
     {
       id: uuidv4(),
@@ -67,8 +67,4 @@ class InMemoryPersonsService {
     this.persons.push(newPerson);
     return newPerson;
   }
-}
-
-module.exports = {
-  InMemoryPersonsService
 }

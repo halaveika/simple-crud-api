@@ -1,14 +1,18 @@
 const http = require('http');
 const InMemoryPersonsService = require('./services/InMemoryPersonsService')
+const PersonsController = require('./controllers/personsController')
+const {getRequestData} = require('./utils/getRequestData');
 
 require('dotenv').config()
 
 const PORT = process.env.PORT || process.env.BACKEND_PORT;
 
-const server  = http.createServer( async(req, res) => {
-    res.end('server work')
-});
+const store = new InMemoryPersonsService();
+const personsController = new PersonsController(store,getRequestData);
 
+const server  = http.createServer( async(req, res) => {
+  await personsController.createPerson(req,res);
+});
 
 
 
