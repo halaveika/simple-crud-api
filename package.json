@@ -23,5 +23,9 @@
   "homepage": "https://github.com/halaveika/simple-crud-api#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
   }
 }
