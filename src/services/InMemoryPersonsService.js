@@ -52,7 +52,7 @@ module.exports = class InMemoryPersonsService {
     return true;
   }
 
-  updatePerson(id, person) {
+  updatePerson(person, id) {
     const index = this.persons.findIndex(person => person.id === id);
     let updatedPerson;
     if (index !== -1) {
@@ -63,6 +63,7 @@ module.exports = class InMemoryPersonsService {
   }
 
   createPerson(person) {
+    if(!person.name || !person.age || !person.hobbies) {return undefined}
     const newPerson = { id: uuidv4(), ...person};
     this.persons.push(newPerson);
     return newPerson;

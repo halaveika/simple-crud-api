@@ -1,4 +1,4 @@
-const getRequestData =(req) => new Promise((resolve, reject) => {
+const bodyParser =(req) => new Promise((resolve, reject) => {
       try {
           let body = "";
           req.on("data", (chunk) => {
@@ -15,4 +15,4 @@ const getRequestData =(req) => new Promise((resolve, reject) => {
       }
   });
 
-module.exports = { getRequestData };
+module.exports = { bodyParser };
