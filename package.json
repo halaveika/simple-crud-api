@@ -1,0 +1,27 @@
+{
+  "name": "simple-crud-api",
+  "version": "1.0.0",
+  "description": "NODEJS_2021Q4",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halaveika/simple-crud-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "crud"
+  ],
+  "author": "halaveika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/halaveika/simple-crud-api/issues"
+  },
+  "homepage": "https://github.com/halaveika/simple-crud-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
