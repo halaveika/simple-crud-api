@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const {PersonExecutError,NoIdError,ValidationError} = require('../customErrors/customErrors');
 
 module.exports = class PersonsController {
   constructor(storeService, bodyParser, bodyValidator) {
@@ -12,12 +12,15 @@ module.exports = class PersonsController {
       const personReq = await this.bodyParser(req) ;
       const isValidationError = this.bodyValidator.validatePerson(personReq);
       if(isValidationError) {
-        throw new Error(isValidationError);
+        throw new ValidationError(isValidationError);
       }
       const newPerson = await this.storeService.createPerson(personReq);
-      res.end(JSON.stringify(newPerson));
+      if(!newPerson) {
+        throw new PersonExecutError('New person have not add');
+      }
+      this._successResponse(201,newPerson,res)
     } catch (error) {
-      res.end(JSON.stringify(error.message))
+      this._errorResponse(error,res);
     }
 
   }
@@ -27,12 +30,15 @@ module.exports = class PersonsController {
       const personReq = await this.bodyParser(req);
       const isValidationError = this.bodyValidator.validatePerson(personReq);
       if(isValidationError) {
-        throw new Error(isValidationError);
+        throw new ValidationError(isValidationError);
       }
       const updatedPerson = await this.storeService.updatePerson(personReq,urlParsed[1]);
-      res.end(JSON.stringify(updatedPerson));
+      if(!updatedPerson) {
+        throw new NoIdError('No person with such id in store');
+      }
+      this._successResponse(200,updatedPerson,res)
     } catch (error) {
-      res.end(JSON.stringify(error))
+      this._errorResponse(error,res);
     }
 
   }
@@ -40,9 +46,12 @@ module.exports = class PersonsController {
   deletePerson = async(req, res, urlParsed) => {
     try {
       const isDeleted = await this.storeService.deletePersonById(urlParsed[1]);
-      res.end(JSON.stringify(isDeleted));
+      if(!isDeleted) {
+        throw new NoIdError('No person with such id in store');
+      }
+      this._successResponse(204,{message:'Person was deleted success'},res)
     } catch (error) {
-      res.end(JSON.stringify(error.message))
+      this._errorResponse(error,res);
     }
 
   }
@@ -50,9 +59,12 @@ module.exports = class PersonsController {
   getPerson = async(req, res, urlParsed) => {
     try {
       const person = await this.storeService.findPersonById(urlParsed[1]);
-      res.end(JSON.stringify(person));
+      if(!person) {
+        throw new NoIdError('No person with such id in store');
+      }
+      this._successResponse(200,person,res)
     } catch (error) {
-      res.end(JSON.stringify(error.message))
+      this._errorResponse(error,res);
     }
 
   }
@@ -60,11 +72,23 @@ module.exports = class PersonsController {
   getAllPersons = async(req, res) => {
     try {
       const persons = await this.storeService.getAllPersons();
-      res.end(JSON.stringify(persons));
+      this._successResponse(200,persons,res)
     } catch (error) {
-      res.end(JSON.stringify(error.message))
+      this._errorResponse(error,res);
     }
 
+  }
+
+  _errorResponse = (error,res) =>{
+    res.writeHead((error.isCustom) ? error.code : 500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: (error.isCustom) 
+      ? error.message :
+       "Error during execution on person route\n" + error.message}))
+  }
+
+  _successResponse = (statuscode,data,res) =>{
+    res.writeHead(statuscode, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(data))
   }
 
 }
