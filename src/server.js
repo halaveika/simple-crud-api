@@ -1,7 +1,7 @@
 const {app} = require('./app')
 require('dotenv').config()
 
-const PORT = process.env.PORT || process.env.BACKEND_PORT;
+const PORT = process.env.PORT;
 
 
 
