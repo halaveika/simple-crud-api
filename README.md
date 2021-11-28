@@ -19,6 +19,7 @@ powered by **node v16.13.0**
 ## API routes
 
 API path **/person**:
+
 GET **/person** or **/person/${personId}**should return all persons or person with corresponding personId
 
 POST **/person**is used to create record about new person and store it in database
