@@ -56,7 +56,7 @@ describe('E2E TEST: 3 SCENARIO', () => {
 
   it('GET-try to get persons with wrong route (should retern status code 404 and error message)', async() =>  {
     const response = await request(app)
-                                .post('/persons')
+                                .get('/persons')
                                 .set('Accept', 'application/json');
     expect(response.statusCode).toBe(404);
     expect(response.headers['content-type']).toBe('application/json');       
@@ -114,6 +114,16 @@ describe('E2E TEST: 3 SCENARIO', () => {
     expect(response.body).toEqual({message: '[age is invalid.]; [hobbies is invalid.]; '});          
   });
 
+  it('POST invalid JSON file(should retern status code 400 and error message during json parsing)', async() =>  {
+
+    const payload = JSON.stringify(`{name: 'Adam',age: 18, hobbies: ['football'], education: }`);
+    const response = await request(app)
+                                .post('/person/dafaffafaf')
+                                .send(payload)
+                                .set('Accept', 'application/json');
+    expect(response.statusCode).toBe(404);
+    expect(response.headers['content-type']).toBe('application/json');                   
+  });
 });
 
 
