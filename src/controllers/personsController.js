@@ -83,7 +83,7 @@ module.exports = class PersonsController {
     res.writeHead((error.isCustom) ? error.code : 500, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: (error.isCustom) 
       ? error.message :
-       "Error during execution on person route\n" + error.message}))
+       `Error during execution on person route: [${error.message}]`}))
   }
 
   _successResponse = (statuscode,data,res) =>{
