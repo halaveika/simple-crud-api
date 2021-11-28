@@ -1,6 +1,12 @@
 # simple-crud-api
 Implementatin of simple CRUD API using in-memory database underneath on NodeJS 2021 Q4 RSSchool course
 
+## Install application
+
+1) clone repository
+2) check node version (**node v16.13.0**)
+3) **npm install** to get all nessesary dependencies
+
 ## Run application
 
 Use command line interface:
@@ -10,11 +16,6 @@ Use command line interface:
 **npm run start:prod** ---- starting server on production mode(on http://localhost:4000)
 
 **npm run test**  ---- run 3 scenario of E2E tests
-
-
-## Node version
-
-powered by **node v16.13.0**
 
 ## API routes
 

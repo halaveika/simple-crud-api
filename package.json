@@ -5,7 +5,7 @@
   "main": "dist/main.bundle.js",
   "scripts": {
     "start:dev": "nodemon",
-    "start:prod": "webpack --mode production && node dist/main.bundle.js",
+    "start:prod": "webpack --mode production && node .",
     "test": "jest"
   },
   "repository": {
